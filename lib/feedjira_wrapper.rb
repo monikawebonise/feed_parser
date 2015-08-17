@@ -1,0 +1,2 @@
+module FeedjiraWrapper
+end

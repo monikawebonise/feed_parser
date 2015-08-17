@@ -1,0 +1,15 @@
+<%= form_tag( :method=>'post', :multipart => true) do %>
+ <p>
+    <label> Enter URL here:</label><br />
+    <%= text_field_tag "url" %>
+    <%= submit_tag 'Parse', :class => "btn btn-primary", id: 'parse_btn' %>
+
+    <%= link_to 'Sort', url_actions_sort_path, id: 'sort_btn'%>
+
+
+    <%= text_field_tag :search, params[:query], class: "span2",
+          placeholder: "Enter text to search",id: "query"  %>
+
+    <%= link_to 'Search', url_actions_search_path, id: 'search_btn'%>
+ </p>
+<% end %>

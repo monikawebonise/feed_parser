@@ -1,0 +1,14 @@
+<h1> Parsing Feeds </h1>
+<%= render 'form'%>
+<% @feed.entries.each do |feed| %>
+  <div>
+    <p>
+      <%= feed.title %>
+      <p>
+        <%= feed.summary %>
+      </p>
+    </p>
+
+  </div>
+<% end %>
+
