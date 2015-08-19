@@ -5,7 +5,7 @@ class UrlActionsController < ApplicationController
   end
 
   def parse_url
-    @feeds = Feed.create_feeds(params[:url])
+    @feeds = Feed.parse(params[:url])
     render json: @feeds
   end
 

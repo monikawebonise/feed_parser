@@ -1,12 +1,12 @@
 class Feed < ActiveRecord::Base
+
   def self.parse(url)
     feeds = Feedjira::Feed.fetch_and_parse(url)
-    content = []
+    @feeds_hash = {}
     feeds.entries.each do |feed|
-      content.push(feed.title)
-      content.push(feed.summary)
+      @feeds_hash["#{feed.title}"] = feed.summary
     end
-    content
+    @feeds_hash
   end
 
   def self.search(url, query)
@@ -19,22 +19,6 @@ class Feed < ActiveRecord::Base
   end
 
   def self.sort
-    feeds_hash = @feeds_hash
-    sorted_hash = {}
-    feeds_hash.sort.map do |key, val|
-      sorted_hash["#{key}"] = val
-    end
-    sorted_hash
-  end
-
-  def self.create_feeds(url)
-    feeds = parse(url)
-    titles = feeds.values_at(* feeds.each_index.select(&:even?))
-    summary = feeds.values_at(* feeds.each_index.select(&:odd?))
-    @feeds_hash = {}
-    titles.size.times do |x|
-      @feeds_hash["#{titles[x]}"] = summary[x]
-    end
-    @feeds_hash
+    @feeds_hash.sort
   end
 end
