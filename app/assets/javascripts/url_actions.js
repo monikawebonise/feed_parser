@@ -10,13 +10,15 @@ $(function(){
       type: 'POST',
       complete: function(data){
               $('#ResultFeeds').html('')
-               parsed_data = $.parseJSON(data.responseText);
+              parsed_data = $.parseJSON(data.responseText);
               $.each(parsed_data, function(index,value) {
                 $("#ResultFeeds").append(index)
                 $("#ResultFeeds").append("<div>")
                 $("#ResultFeeds").append(value)
                 $("#ResultFeeds").append("</div>")
               });
+              //({}});
+
       }
     });
   });
@@ -45,17 +47,7 @@ $('#sort_btn').click(function(e){
       $("#ResultFeeds").append("</div>")
    });
   });
-    // $.ajax({
-    //   url: '/url_actions/search',
-    //   data: {query: $('#query').val(), url: $('#url').val()},
-    //   dataType: 'JSON',
-    //   type: 'GET',
-    //   complete: function(data){
-    //     $('#ResultFeeds').html('')
-    //     response = JSON.parse(data.responseText)
-    //     $('#ResultFeeds').html(response)
-    //   }
-    // });
+
 
   function sort(data)
   {
@@ -82,18 +74,18 @@ $('#sort_btn').click(function(e){
 
   function search(data,query)
   {
-    for (var i in data){
-      //console.log(data);
-      for ( var key in data[i]){
-        if (data[key].search(/query/i)>=0|| data) {
-            return data[i];
+    var searched_data = {};
+    for (var key in data){
+      if (data.hasOwnProperty(key)) {
+        var keyString = key;
+        var valueString = data[key];
+        if ( keyString.toLowerCase().search(query.toLowerCase()) >= 0
+            || valueString.toLowerCase().search(query.toLowerCase() )>=0){
+          searched_data[keyString] = valueString;
         }
       }
     }
-
+    return searched_data;
   }
-
-
-
 });
 
